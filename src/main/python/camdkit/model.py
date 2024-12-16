@@ -655,42 +655,43 @@ class TimingSynchronization(Parameter):
       "description": Synchronization.__doc__,
       "properties": {
         "frequency": {
-          "type": "object",
-          "additionalProperties": False,
-          "required": [ "num", "denom" ],
-          "properties": {
-            "num": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": UINT_MAX
-            },
-            "denom": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": UINT_MAX
+          "anyOf": [ {
+            "type": "object",
+            "additionalProperties": False,
+            "required": [ "num", "denom" ],
+            "properties": {
+              "num": { "type": "integer", "minimum": 1, "maximum": INT_MAX },
+              "denom": { "type": "integer", "minimum": 1, "maximum": UINT_MAX}
             }
-          }
-        },
+          }, {
+            "type": "null"
+          } ], "default": None},
         "locked": { "type": "boolean" },
         "offsets": {
-          "type": "object",
-          "additionalProperties": False,
-          "properties": {
-            "translation": { "type": "number" },
-            "rotation": { "type": "number" },
-            "lensEncoders": { "type": "number" }
-          }
-        },
-        "present": { "type": "boolean" },
+          "anyOf": [ {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+              "translation": { "anyOf": [ { "type": "number" }, { "type": "null" } ], "default": None },
+              "rotation": { "anyOf": [ { "type": "number" }, { "type": "null" } ], "default": None },
+              "lensEncoders": { "anyOf": [ { "type": "number" }, { "type": "null" } ], "default": None },
+            }
+          }, {
+            "type": "null"
+          } ], "default": None},
+        "present": { "anyOf": [ { "type": "boolean" }, {"type": "null"} ], "default": None },
         "ptp": {
-          "type": "object",
-          "additionalProperties": False,
-          "properties": {
-            "master": { "type": "string", "pattern": "^([A-F0-9]{2}:){5}[A-F0-9]{2}$" },
-            "offset": { "type": "number" },
-            "domain": { "type": "integer", "minimum": 0, "maximum": 127 }
-          }
-        },
+          "anyOf": [ {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+              "master": { "anyOf": [ { "type": "string", "pattern": "^([A-F0-9]{2}:){5}[A-F0-9]{2}$" }, { "type" : "null" } ], "default": None },
+              "offset": { "anyOf": [ { "type": "number" }, { "type": "null" } ], "default": None },
+              "domain": { "anyOf": [ { "type": "integer", "minimum": 0, "maximum": 127 }, { "type": "null" } ], "default": None },
+            }
+          }, {
+            "type": "null"
+          } ], "default": None},
         "source": { "type": "string", "enum": [e.value for e in SynchronizationSourceEnum] },
       },
       "required": ["locked", "source"]
