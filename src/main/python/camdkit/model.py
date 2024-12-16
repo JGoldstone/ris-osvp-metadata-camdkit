@@ -1407,7 +1407,7 @@ class Clip(ParameterContainer):
   lens_t_number: typing.Optional[typing.Tuple[numbers.Real]] = TStop()
   lens_undistortion_overscan: typing.Optional[typing.Tuple[numbers.Real]] = UndistortionOverscan()
   protocol: typing.Optional[typing.Tuple[VersionedProtocol]] = Protocol()
-  related_sample_ids: typing.Optional[typing.Tuple[tuple]] = RelatedSampleIds()
+  related_sample_ids: typing.Optional[typing.Tuple[tuple[str]]] = RelatedSampleIds()
   sample_id: typing.Optional[typing.Tuple[str]] = SampleId()
   source_id: typing.Optional[typing.Tuple[str]] = SourceId()
   source_number: typing.Optional[typing.Tuple[int]] = SourceNumber()
