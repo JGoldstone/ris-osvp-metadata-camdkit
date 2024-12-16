@@ -965,7 +965,7 @@ class TimingTimecode(Parameter):
                 "num": {
                   "type": "integer",
                   "minimum": 1,
-                  "maximum": UINT_MAX
+                  "maximum": INT_MAX
                 },
                 "denom": {
                   "type": "integer",
