@@ -483,7 +483,7 @@ class Transforms(Parameter):
         transform.scale = Vector3(transform.scale["x"], transform.scale["y"], transform.scale["z"])
       transforms += (transform, )
     return transforms
-  
+
   @staticmethod
   def make_json_schema() -> dict:
     return {
@@ -492,67 +492,52 @@ class Transforms(Parameter):
       "uniqueItems": False,
       "items": {
         "type": "object",
-        "additionalProperties": False,
         "properties": {
           "translation": {
             "type": "object",
-            "additionalProperties": False,
-            "properties": {
-              "x": {
-                  "type": "number",
-              },
-              "y": {
-                  "type": "number",
-              },
-              "z": {
-                  "type": "number"
-              }
-            },
-            "units": "meter"
+            "properties": { "x": { "type": "number" },
+                            "y": {  "type": "number" },
+                            "z": {  "type": "number" } },
+            "required": [ "x", "y", "z" ],
+            "additionalProperties": False
           },
           "rotation": {
             "type": "object",
-            "additionalProperties": False,
-            "properties": {
-              "pan": {
-                  "type": "number",
-              },
-              "tilt": {
-                  "type": "number",
-              },
-              "roll": {
-                  "type": "number"
-              }
-            },
-            "units": "degree"
+            "properties": { "pan": { "type": "number" },
+                            "tilt": { "type": "number" },
+                            "roll": { "type": "number" } },
+            "required": [ "pan", "tilt", "roll" ],
+            "additionalProperties": False
           },
           "scale": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {
-              "x": {
-                  "type": "number",
-              },
-              "y": {
-                  "type": "number",
-              },
-              "z": {
-                  "type": "number"
-              }
-            }
+            "anyOf": [
+              { "type": "object",
+                "properties": { "x": { "type": "number" },
+                                "y": {  "type": "number" },
+                                "z": { "type": "number" } },
+                "required": [ "x", "y", "z" ],
+                "additionalProperties": False
+                },
+              { "type": "null" } ],
+            "default": None
           },
           "id": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 1023
+            "anyOf": [
+              { "type": "string",
+                "pattern": "^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$" },
+              { "type": "null" } ],
+            "default": None
           },
-          "parentId": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 1023
+          "parent_id": {
+            "anyOf": [
+              { "type": "string",
+                "pattern": "^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$" },
+              { "type": "null" } ],
+            "default": None
           }
         },
-        "required": ["translation", "rotation"]
+        "required": [ "translation", "rotation" ],
+        "additionalProperties": False
       }
     }
 
