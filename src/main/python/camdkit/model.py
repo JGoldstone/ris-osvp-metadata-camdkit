@@ -562,7 +562,7 @@ class TimingSynchronization(Parameter):
   example)
   ptp: If the synchronization source is a PTP leader, then this object
   contains:
-  - "leader": The MAC address of the PTP master
+  - "leader": The MAC address of the PTP leader
   - "offset": The timing offset in seconds from the sample timestamp to
   the PTP timestamp
   - "domain": The PTP domain number
